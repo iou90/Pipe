@@ -94,6 +94,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kant.Wpf.Controls.Pipe\Kant.Wpf.Controls.Pipe.csproj">
+      <Project>{883ffaa5-dcc6-4677-8b04-bf4aaa3d6bf7}</Project>
+      <Name>Kant.Wpf.Controls.Pipe</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -76,9 +76,9 @@ namespace Kant.Wpf.Controls
             RadiusY = ActualHeight / 2;
             RadiusX = RadiusY * Curveness;
             PipeTailWidth = RadiusX * 2;
-            var tempLeftMargin = (RadiusX / 7) * 6;
-            tailStaffing.Margin = new Thickness(tempLeftMargin, 0, 0, 0);
-            tailStaffing.Width = tempLeftMargin;
+            var pathLength = (RadiusX / 6) * 7;
+            tailStaffing.Margin = new Thickness(-pathLength, 0, 0, 0);
+            tailStaffing.Width = pathLength;
             var tempCenterX = (RadiusX / 3) * 4;
             var tempRectangleWidth = RadiusX * 3;
             var ellipseGeometry = new EllipseGeometry(new Point(tempCenterX, RadiusY), RadiusX, RadiusY);
@@ -123,7 +123,7 @@ namespace Kant.Wpf.Controls
             set { SetValue(StrokeThicknessProperty, value); }
         }
 
-        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Pipe), new PropertyMetadata(1));
+        public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Pipe), new PropertyMetadata(1.0));
 
         public Brush TailColor
         {
@@ -139,7 +139,7 @@ namespace Kant.Wpf.Controls
             set { SetValue(TailStrokeThicknessProperty, value); }
         }
 
-        public static readonly DependencyProperty TailStrokeThicknessProperty = DependencyProperty.Register("TailStrokeThickness", typeof(double), typeof(Pipe), new PropertyMetadata(3));
+        public static readonly DependencyProperty TailStrokeThicknessProperty = DependencyProperty.Register("TailStrokeThickness", typeof(double), typeof(Pipe), new PropertyMetadata(3.0));
 
         public double Curveness
         {
@@ -175,7 +175,7 @@ namespace Kant.Wpf.Controls
             }
             private set
             {
-                if (value > 0 && value < 1 && value != radiusX)
+                if (value > 0 && value != radiusX)
                 {
                     radiusX = value;
                     RaisePropertyChanged(() => RadiusX);
@@ -192,7 +192,7 @@ namespace Kant.Wpf.Controls
             }
             private set
             {
-                if (value > 0 && value < 1 && value != radiusY)
+                if (value > 0 && value != radiusY)
                 {
                     radiusY = value;
                     RaisePropertyChanged(() => RadiusY);
