@@ -7,9 +7,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Pipe}">
                     <Rectangle x:Name="PartOutlineRectangle"
-                               RadiusX="{TemplateBinding RadiusX}"
-                               RadiusY="{TemplateBinding RadiusY}"
-                               Fill="{TemplateBinding Color}"
+                               RadiusX="{Binding RadiusX, RelativeSource={RelativeSource AncestorType=local:Pipe}}"
+                               RadiusY="{Binding RadiusY, RelativeSource={RelativeSource AncestorType=local:Pipe}}"
                                StrokeThickness="{TemplateBinding StrokeThickness}"
                                Stroke="{TemplateBinding Stroke}">
                         <Rectangle.OpacityMask>
