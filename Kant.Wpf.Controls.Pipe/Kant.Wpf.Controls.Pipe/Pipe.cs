@@ -31,7 +31,7 @@ namespace Kant.Wpf.Controls
         {
             SizeChanged += (s, e) =>
             {
-                UpdateLayout();
+                UpdateFigure();
             };
         }
 
@@ -58,7 +58,7 @@ namespace Kant.Wpf.Controls
 
             if(!(value > 0 && value <= 1))
             {
-                ((Pipe)o).UpdateLayout();
+                ((Pipe)o).UpdateFigure();
             }
             else
             {
@@ -66,8 +66,13 @@ namespace Kant.Wpf.Controls
             }
         }
 
-        private void UpdateLayout()
+        private void UpdateFigure()
         {
+            if(ActualHeight == 0 || ActualWidth == 0)
+            {
+                return;
+            }
+
             if(tailStaffing == null)
             {
                 return;

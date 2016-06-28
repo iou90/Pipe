@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Kant.Wpf.Controls.Example"
         xmlns:controls="clr-namespace:Kant.Wpf.Controls;assembly=Kant.Wpf.Controls.Pipe"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow"
+        Height="350"
+        Width="525">
     <Grid>
-        <controls:Pipe Margin="55" />
+        <controls:Pipe Margin="15"
+                       Height="15"
+                       TailStrokeThickness="2" />
     </Grid>
 </Window>
