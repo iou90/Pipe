@@ -9,7 +9,7 @@
                     <Rectangle x:Name="PartOutlineRectangle"
                                RadiusX="{TemplateBinding RadiusX}"
                                RadiusY="{TemplateBinding RadiusY}"
-                               Fill="{TemplateBinding Brush}"
+                               Fill="{TemplateBinding Color}"
                                StrokeThickness="{TemplateBinding StrokeThickness}"
                                Stroke="{TemplateBinding Stroke}">
                         <Rectangle.OpacityMask>
@@ -18,18 +18,18 @@
                                     <Grid Width="{Binding ElementName=PartOutlineRectangle, Path=ActualWidth}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="{bi}" />
+                                            <ColumnDefinition Width="{Binding PipeTailWidth, RelativeSource={RelativeSource AncestorType=local:Pipe}}" />
                                         </Grid.ColumnDefinitions>
                                         <Rectangle Height="{Binding ElementName=PartOutlineRectangle, Path=ActualHeight}"
                                                    Fill="Black" />
-                                        <Path x:Name="PartRimStuffing" Grid.Column="1"
+                                        <Path x:Name="PartTailStuffing" Grid.Column="1"
                                               Height="{Binding ElementName=PartOutlineRectangle, Path=ActualHeight}"
                                               Fill="Black" />
                                         <Ellipse Grid.Column="1"
                                                  Height="{Binding ElementName=PartOutlineRectangle, Path=ActualHeight}"
                                                  Stroke="{Binding ElementName=PartOutlineRectangle, Path=Stroke}"
-                                                 StrokeThickness="{TemplateBinding RimThickness}"
-                                                 Fill="{TemplateBinding RimBrush}"/>
+                                                 StrokeThickness="{TemplateBinding TailStrokeThickness}"
+                                                 Fill="{TemplateBinding TailColor}"/>
                                     </Grid>
                                 </VisualBrush.Visual>
                             </VisualBrush>
