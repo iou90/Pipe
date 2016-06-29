@@ -51,7 +51,7 @@ namespace Kant.Wpf.Controls
             var path = GetTemplateChild("PartTailStuffing") as Path;
             var ellipse = GetTemplateChild("PartTail") as Ellipse;
 
-            if(path == null)
+            if (path == null)
             {
                 throw new MissingMemberException("can not find template child PartTailStuffing.");
             }
@@ -109,23 +109,30 @@ namespace Kant.Wpf.Controls
                 return;
             }
 
-            if(tailStaffing == null)
+            if(tailStaffing == null || tail == null)
             {
                 return;
             }
 
-            if(ActualWidth < ActualHeight / 2)
+            RadiusY = ActualHeight / 2;
+            RadiusX = RadiusY * Curveness;
+            PipeTailWidth = RadiusX * 2;
+
+            if (ActualWidth < RadiusX * 2)
             {
-                if(tail.Fill.Opacity > 0)
+                if (tail.Fill != null)
                 {
-                    tempTailColorOpacity = tail.Fill.Opacity;
+                    if (tail.Fill.Opacity > 0)
+                    {
+                        tempTailColorOpacity = tail.Fill.Opacity;
+                    }
+
+                    UpdateTailColorOpacity(0);
+                    tailStaffing.Data = null;
+                    isTailDisappeared = true;
+
+                    return;
                 }
-
-                UpdateTailColorOpacity(0);
-                tailStaffing.Data = null;
-                isTailDisappeared = true;
-
-                return;
             }
 
             if(isTailDisappeared)
@@ -134,9 +141,6 @@ namespace Kant.Wpf.Controls
                 isTailDisappeared = false;
             }
 
-            RadiusY = ActualHeight / 2;
-            RadiusX = RadiusY * Curveness;
-            PipeTailWidth = RadiusX * 2;
             var pathLength = (RadiusX / 6) * 7;
             tailStaffing.Margin = new Thickness(-pathLength, 0, 0, 0);
             tailStaffing.Width = pathLength;

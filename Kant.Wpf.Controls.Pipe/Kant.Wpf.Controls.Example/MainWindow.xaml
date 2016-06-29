@@ -10,7 +10,8 @@
         Height="350"
         Width="525">
     <Grid>
-        <controls:Pipe Margin="55"
+        <controls:Pipe x:Name="pipe"
+                       Margin="55"
                        Height="25"
                        TailStrokeThickness="2" />
     </Grid>
