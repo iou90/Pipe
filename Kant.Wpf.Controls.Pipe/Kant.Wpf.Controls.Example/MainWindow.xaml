@@ -10,8 +10,8 @@
         Height="350"
         Width="525">
     <Grid>
-        <controls:Pipe Margin="15"
-                       Height="15"
+        <controls:Pipe Margin="55"
+                       Height="25"
                        TailStrokeThickness="2" />
     </Grid>
 </Window>

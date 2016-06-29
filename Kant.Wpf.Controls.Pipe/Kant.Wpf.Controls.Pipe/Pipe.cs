@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 namespace Kant.Wpf.Controls
 {
     [TemplatePart(Name = "PartTailStuffing", Type = typeof(Path))]
+    [TemplatePart(Name = "PartTail", Type = typeof(Path))]
     public class Pipe : Control, INotifyPropertyChanged
     {
         #region constructor
@@ -33,6 +34,11 @@ namespace Kant.Wpf.Controls
             {
                 UpdateFigure();
             };
+
+            Loaded += (s, e) =>
+            {
+                UpdateTailColorOpacity(TailColorOpacity);
+            };
         }
 
         #endregion
@@ -43,6 +49,7 @@ namespace Kant.Wpf.Controls
         {
             base.OnApplyTemplate();
             var path = GetTemplateChild("PartTailStuffing") as Path;
+            var ellipse = GetTemplateChild("PartTail") as Ellipse;
 
             if(path == null)
             {
@@ -50,9 +57,21 @@ namespace Kant.Wpf.Controls
             }
 
             tailStaffing = path;
+
+            if (ellipse == null)
+            {
+                throw new MissingMemberException("can not find template child PartTail.");
+            }
+
+            tail = ellipse;
         }
 
-        public static void OnCurvenessSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnTailColorOpacitySourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            ((Pipe)o).UpdateTailColorOpacity((double)e.NewValue);
+        }
+
+        private static void OnCurvenessSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var value = (double)e.NewValue;
 
@@ -66,6 +85,23 @@ namespace Kant.Wpf.Controls
             }
         }
 
+        private void UpdateTailColorOpacity(double opacity)
+        {
+            if(tailStaffing == null)
+            {
+                return;
+            }
+
+            if(!(opacity >= 0 && opacity <= 1))
+            {
+                throw new ArgumentOutOfRangeException("opacity hase to greater than or equal 0 and less than or equal 1");
+            }
+
+            var color = Color.CloneCurrentValue();
+            color.Opacity = opacity;
+            tail.Fill = color;
+        }
+
         private void UpdateFigure()
         {
             if(ActualHeight == 0 || ActualWidth == 0)
@@ -76,6 +112,26 @@ namespace Kant.Wpf.Controls
             if(tailStaffing == null)
             {
                 return;
+            }
+
+            if(ActualWidth < ActualHeight / 2)
+            {
+                if(tail.Fill.Opacity > 0)
+                {
+                    tempTailColorOpacity = tail.Fill.Opacity;
+                }
+
+                UpdateTailColorOpacity(0);
+                tailStaffing.Data = null;
+                isTailDisappeared = true;
+
+                return;
+            }
+
+            if(isTailDisappeared)
+            {
+                UpdateTailColorOpacity(tempTailColorOpacity);
+                isTailDisappeared = false;
             }
 
             RadiusY = ActualHeight / 2;
@@ -130,13 +186,13 @@ namespace Kant.Wpf.Controls
 
         public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register("StrokeThickness", typeof(double), typeof(Pipe), new PropertyMetadata(1.0));
 
-        public Brush TailColor
+        public double TailColorOpacity
         {
-            get { return (Brush)GetValue(TailColorProperty); }
-            set { SetValue(TailColorProperty, value); }
+            get { return (double)GetValue(TailColorOpacityProperty); }
+            set { SetValue(TailColorOpacityProperty, value); }
         }
 
-        public static readonly DependencyProperty TailColorProperty = DependencyProperty.Register("TailColor", typeof(Brush), typeof(Pipe), new PropertyMetadata(new SolidColorBrush(Colors.DarkGray) { Opacity = 0.05 }));
+        public static readonly DependencyProperty TailColorOpacityProperty = DependencyProperty.Register("TailColorOpacity", typeof(double), typeof(Pipe), new PropertyMetadata(0.15, OnTailColorOpacitySourceChanged));
 
         public double TailStrokeThickness
         {
@@ -206,6 +262,12 @@ namespace Kant.Wpf.Controls
         }
 
         private Path tailStaffing;
+
+        private Ellipse tail;
+
+        private bool isTailDisappeared;
+
+        private double tempTailColorOpacity;
 
         #endregion
 

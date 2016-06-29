@@ -25,11 +25,11 @@
                                               Grid.Column="1"
                                               Height="{Binding ElementName=PartOutlineRectangle, Path=ActualHeight}"
                                               Fill="Black" />
-                                        <Ellipse Grid.Column="1"
+                                        <Ellipse x:Name="PartTail"
+                                                 Grid.Column="1"
                                                  Height="{Binding ElementName=PartOutlineRectangle, Path=ActualHeight}"
                                                  Stroke="{Binding ElementName=PartOutlineRectangle, Path=Stroke}"
-                                                 StrokeThickness="{TemplateBinding TailStrokeThickness}"
-                                                 Fill="{TemplateBinding TailColor}" />
+                                                 StrokeThickness="{TemplateBinding TailStrokeThickness}" />
                                     </Grid>
                                 </VisualBrush.Visual>
                             </VisualBrush>
