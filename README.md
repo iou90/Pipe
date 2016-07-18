@@ -1,2 +1,2 @@
 # Pipe
-a Pipe for WPF
+A Pipe for WPF
